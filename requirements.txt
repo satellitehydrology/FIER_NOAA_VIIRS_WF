@@ -1,0 +1,15 @@
+click
+streamlit
+streamlit-folium
+xarray
+matplotlib
+netcdf4
+tensorflow
+openpyxl
+pandas==1.3.5
+numpy
+requests
+plotly
+datetime
+pynwm
+scipy
