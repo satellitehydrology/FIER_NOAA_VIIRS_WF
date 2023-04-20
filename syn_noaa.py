@@ -195,7 +195,7 @@ def run_fier(AOI_str, doi, in_run_type):
     hist_syn_stack_path = qm_scaling_path+'hist_syn_wf_trim.nc'
 
     RSM_path = 'AOI/'+AOI_str+'/RSM/SM_hydro_App.nc'
-    jrc_perm_water_path = 'AOI/'+AOI_str+'/RSM/jrc_perm_water.nc'
+    jrc_perm_water_path = 'AOI/'+AOI_str+'/RSM/JRC_perm_water.nc'
     qm_pr_r_mask_path = qm_scaling_path+'qm_pr_r_mask.nc'
     qm_spr_r_mask_path = qm_scaling_path+'qm_spr_r_mask.nc'
 
