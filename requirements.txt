@@ -13,3 +13,4 @@ plotly
 datetime
 pynwm
 scipy
+xyzservices
