@@ -384,10 +384,9 @@ with row1_col2:
 with row1_col1:
     folium_static(m, height = 600, width = 900)
     st.write('Disclaimer: This is a test version of FIER using VIIRS-derived water fraction maps over selected regions in US.')
-    url = "https://www.sciencedirect.com/science/article/pii/S0034425720301024?casa_token=kOYlVMMWkBUAAAAA:fiFM4l6BUzJ8xTCksYUe7X4CcojddbO8ybzOSMe36f2cFWEXDa_aFHaGeEFlN8SuPGnDy7Ir8w"
-    st.write("Reference: [Chang, C. H., Lee, H., Kim, D., Hwang, E., Hossain, F., Chishtie, F., ... & Basnayake, S. (2020). Hindcast and forecast of daily inundation extents using satellite SAR and altimetry data with rotated empirical orthogonal function analysis: Case study in Tonle Sap Lake Floodplain. Remote Sensing of Environment, 241, 111732.](%s)" % url)
-    url = "https://uofh-my.sharepoint.com/:b:/g/personal/cchang37_cougarnet_uh_edu/EZ70ySxmR3RDhJL5-uAHlAEBf0xI4c-BMsXQnUKT009kFA?e=tynflq"
-    st.write("See here for the [Data and Procedure](%s)" % url)
+    url = "https://uofh-my.sharepoint.com/:p:/g/personal/cchang37_cougarnet_uh_edu/ERVoJqA2BIZHgf2BYUwLiSsBFTTeOpyKYsCjSB0PlbdaSw?e=8Phoq3"
+    url_1 = "https://www.sciencedirect.com/science/article/pii/S0034425720301024?casa_token=kOYlVMMWkBUAAAAA:fiFM4l6BUzJ8xTCksYUe7X4CcojddbO8ybzOSMe36f2cFWEXDa_aFHaGeEFlN8SuPGnDy7Ir8w"
+    st.write("Reference: [Chang et al. (2023)](%s), [Chang et al. (2020)](%s)" %(url, url_1))
     st.write("This app has been developed by Chi-Hung Chang  & Son Do at University of Houston with supports from NOAA JPSS program.")
     st.write("Kel Markert at the Brigham Young University is also acknowledged for the development of this App.")
 
