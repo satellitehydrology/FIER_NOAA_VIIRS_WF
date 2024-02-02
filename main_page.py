@@ -31,10 +31,11 @@ with row1_col1:
         zoom_start=4,
         location =(36.52, -89.55),
         control_scale=True,
+        tiles = 'Stamen Terrain'
     )
 
     plugins.Fullscreen(position='topright').add_to(m)
-    folium.TileLayer('Stamen Terrain').add_to(m)
+    #folium.TileLayer('Stamen Terrain').add_to(m)
     m.add_child(folium.LatLngPopup())
     folium.LayerControl().add_to(m)
 
@@ -106,6 +107,7 @@ with row1_col2:
                         zoom_start = 8,
                         location = location,
                         control_scale=True,
+                        tiles = 'Stamen Terrain'
                 )
 
                 folium.raster_layers.ImageOverlay(
@@ -123,7 +125,7 @@ with row1_col2:
                 m.add_child(colormap)
 
                 plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer('Stamen Terrain').add_to(m)
+                #folium.TileLayer('Stamen Terrain').add_to(m)
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
        if run_type == 'Medium-Range (archived 8-day forecasts)':
@@ -165,6 +167,7 @@ with row1_col2:
                         zoom_start = 8,
                         location = location,
                         control_scale=True,
+                        tiles = 'Stamen Terrain'
                 )
 
                 folium.raster_layers.ImageOverlay(
@@ -182,7 +185,7 @@ with row1_col2:
                 m.add_child(colormap)
 
                 plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer('Stamen Terrain').add_to(m)
+                #folium.TileLayer('Stamen Terrain').add_to(m)
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
 
@@ -224,6 +227,7 @@ with row1_col2:
                         zoom_start = 8,
                         location = location,
                         control_scale=True,
+                        tiles = 'Stamen Terrain'
                 )
 
                 folium.raster_layers.ImageOverlay(
@@ -241,7 +245,7 @@ with row1_col2:
                 m.add_child(colormap)
 
                 plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer('Stamen Terrain').add_to(m)
+                #folium.TileLayer('Stamen Terrain').add_to(m)
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
             
@@ -284,6 +288,7 @@ with row1_col2:
                         zoom_start = 8,
                         location = location,
                         control_scale=True,
+                        tiles = 'Stamen Terrain'
                 )
 
                 folium.raster_layers.ImageOverlay(
@@ -301,7 +306,7 @@ with row1_col2:
                 m.add_child(colormap)
 
                 plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer('Stamen Terrain').add_to(m)
+                #folium.TileLayer('Stamen Terrain').add_to(m)
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
             
@@ -344,6 +349,7 @@ with row1_col2:
                         zoom_start = 8,
                         location = location,
                         control_scale=True,
+                        tiles = 'Stamen Terrain'
                 )
 
                 folium.raster_layers.ImageOverlay(
@@ -361,7 +367,7 @@ with row1_col2:
                 m.add_child(colormap)
 
                 plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer('Stamen Terrain').add_to(m)
+                #folium.TileLayer('Stamen Terrain').add_to(m)
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
 
