@@ -1,19 +1,28 @@
 import folium
 import folium.plugins as plugins
+
 import streamlit as st
 from streamlit_folium import folium_static
 from PIL import Image
-import xarray as xr
+from xyzservices.lib import TileProvider
+
 from syn_noaa import *
-import requests
+
+import urllib
+import json
+
+import xarray as xr
 import numpy.ma as ma
 import pandas as pd
+from scipy import interpolate
+
 import matplotlib.pyplot as plt
+
 import datetime
+
 import branca
 import branca.colormap as cm
-from scipy import interpolate
-from xyzservices.lib import TileProvider
+
 import ssl
 
 
