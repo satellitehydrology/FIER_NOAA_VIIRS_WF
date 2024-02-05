@@ -10,6 +10,7 @@ import matplotlib.colors
 
 import urllib
 import json
+import ssl
 
 import datetime as dt
 import pandas as pd
