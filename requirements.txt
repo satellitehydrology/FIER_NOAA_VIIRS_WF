@@ -8,8 +8,6 @@ tensorflow
 openpyxl
 pandas==1.3.5
 numpy
-urllib
-json
 plotly
 datetime
 pynwm
