@@ -232,12 +232,11 @@ def run_fier(AOI_str, doi, in_run_type):
 
             ssl._create_default_https_context = ssl._create_stdlib_context
            
-            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id='+str(nwm_site))
             data = webURL.read()
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
             
-            exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id='+str(nwm_site)).json()
             fct_datetime = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             doi_indx0 = fct_datetime >= (dt.datetime.strptime(doi,'%Y-%m-%d'))
             doi_indx1 = (fct_datetime < (dt.datetime.strptime(doi,'%Y-%m-%d'))+dt.timedelta(days=1))
