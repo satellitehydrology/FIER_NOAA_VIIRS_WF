@@ -83,7 +83,7 @@ with row1_col2:
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
 
-            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -206,7 +206,7 @@ with row1_col2:
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
 
-            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -272,7 +272,7 @@ with row1_col2:
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
 
-            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -338,7 +338,7 @@ with row1_col2:
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
 
-            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
