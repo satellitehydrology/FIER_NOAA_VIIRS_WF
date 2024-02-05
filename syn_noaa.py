@@ -7,7 +7,10 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors
-import requests
+
+import urllib
+import json
+
 import datetime as dt
 import pandas as pd
 from scipy import interpolate
@@ -224,15 +227,23 @@ def run_fier(AOI_str, doi, in_run_type):
             
         if in_run_type=='archive':
             doi_fct_q = nwm_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
-        else:            
+        else:        
+
+            ssl._create_default_https_context = ssl._create_stdlib_context
+           
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            data = webURL.read()
+            encoding = webURL.info().get_content_charset('utf-8')
+            JSON_object = json.loads(data.decode(encoding))
+            
             exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id='+str(nwm_site)).json()
-            fct_datetime = pd.to_datetime(pd.DataFrame(exp_fct[0]['data'])['forecast-time'])
+            fct_datetime = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
             doi_indx0 = fct_datetime >= (dt.datetime.strptime(doi,'%Y-%m-%d'))
             doi_indx1 = (fct_datetime < (dt.datetime.strptime(doi,'%Y-%m-%d'))+dt.timedelta(days=1))
             doi_indx = doi_indx0 & doi_indx1
         
             doi_fct_datetime = fct_datetime[doi_indx]
-            doi_fct_q = (pd.DataFrame(exp_fct[0]['data'])['value'][doi_indx]*0.0283168).mean()
+            doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
                                
         in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
 
