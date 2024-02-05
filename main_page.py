@@ -17,7 +17,6 @@ from xyzservices.lib import TileProvider
 import ssl
 
 
-ssl._create_default_https_context = ssl._create_stdlib_context
 
 basemap = TileProvider.from_qms("OpenTopoMap")
 
@@ -76,7 +75,9 @@ with row1_col2:
     with st.form("FIER with NWM Analysis Simulation"):
        if run_type == 'Analysis Simulation':
             in_run_type = 'analysis_assim'
-        
+
+            ssl._create_default_https_context = ssl._create_stdlib_context
+           
             exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
             exp_fct_indata = exp_fct[0]["data"]
             exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
@@ -134,7 +135,7 @@ with row1_col2:
                 folium.LayerControl().add_to(m)
        if run_type == 'Medium-Range (archived 8-day forecasts)':
             in_run_type = 'archive' #archive
-            
+           
             AOI_str = st.session_state.AOI_str
             exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc').time.data}
             exp_fct_data = pd.DataFrame(exp_fct_indata)['time']
@@ -194,6 +195,9 @@ with row1_col2:
 
        if run_type == 'Short-Range':
             in_run_type = 'short_range'
+
+            ssl._create_default_https_context = ssl._create_stdlib_context           
+           
             exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
             exp_fct_indata = exp_fct[0]["data"]
             exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
@@ -254,6 +258,9 @@ with row1_col2:
 
        if run_type == 'Medium-Range':
             in_run_type = 'medium_range_ensemble_mean'
+
+            ssl._create_default_https_context = ssl._create_stdlib_context
+           
             exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
             exp_fct_indata = exp_fct[0]["data"]
             exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
@@ -314,6 +321,9 @@ with row1_col2:
             
        if run_type == 'Long-Range':
             in_run_type = 'long_range_ensemble_mean'
+
+            ssl._create_default_https_context = ssl._create_stdlib_context
+           
             exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
             exp_fct_indata = exp_fct[0]["data"]
             exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
