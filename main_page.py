@@ -14,6 +14,7 @@ import branca
 import branca.colormap as cm
 from scipy import interpolate
 from xyzservices.lib import TileProvider
+import ssl
 
 
 ssl._create_default_https_context = ssl._create_stdlib_context
