@@ -16,6 +16,8 @@ from scipy import interpolate
 from xyzservices.lib import TileProvider
 
 
+ssl._create_default_https_context = ssl._create_stdlib_context
+
 basemap = TileProvider.from_qms("OpenTopoMap")
 
 if 'AOI_str' not in st.session_state:
