@@ -78,9 +78,12 @@ with row1_col2:
 
             ssl._create_default_https_context = ssl._create_stdlib_context
            
-            exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
-            exp_fct_indata = exp_fct[0]["data"]
-            exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            data = webURL.read()
+            encoding = webURL.info().get_content_charset('utf-8')
+            JSON_object = json.loads(data.decode(encoding))
+
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -197,10 +200,13 @@ with row1_col2:
             in_run_type = 'short_range'
 
             ssl._create_default_https_context = ssl._create_stdlib_context           
-           
-            exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
-            exp_fct_indata = exp_fct[0]["data"]
-            exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
+
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            data = webURL.read()
+            encoding = webURL.info().get_content_charset('utf-8')
+            JSON_object = json.loads(data.decode(encoding))
+
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -261,9 +267,12 @@ with row1_col2:
 
             ssl._create_default_https_context = ssl._create_stdlib_context
            
-            exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
-            exp_fct_indata = exp_fct[0]["data"]
-            exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            data = webURL.read()
+            encoding = webURL.info().get_content_charset('utf-8')
+            JSON_object = json.loads(data.decode(encoding))
+
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
@@ -324,9 +333,12 @@ with row1_col2:
 
             ssl._create_default_https_context = ssl._create_stdlib_context
            
-            exp_fct = requests.get('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342').json()
-            exp_fct_indata = exp_fct[0]["data"]
-            exp_fct_data = pd.DataFrame(exp_fct_indata)["forecast-time"]
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id=7469342')
+            data = webURL.read()
+            encoding = webURL.info().get_content_charset('utf-8')
+            JSON_object = json.loads(data.decode(encoding))
+
+            exp_fct_data = pd.DataFrame(JSON_object[0]["data")["forecast-time"]
             exp_fct_time = pd.to_datetime(exp_fct_data)
 
             first_date = exp_fct_time[0]
