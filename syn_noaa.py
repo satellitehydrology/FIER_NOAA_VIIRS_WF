@@ -237,7 +237,7 @@ def run_fier(AOI_str, doi, in_run_type):
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
             
-            fct_datetime = pd.DataFrame(JSON_object[0]["data"])["forecast-time"]
+            fct_datetime = pd.to_datetime(pd.DataFrame(JSON_object[0]["data"])["forecast-time"])
             doi_indx0 = fct_datetime >= (dt.datetime.strptime(doi,'%Y-%m-%d'))
             doi_indx1 = (fct_datetime < (dt.datetime.strptime(doi,'%Y-%m-%d'))+dt.timedelta(days=1))
             doi_indx = doi_indx0 & doi_indx1
