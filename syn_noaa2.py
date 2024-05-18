@@ -180,10 +180,39 @@ def perf_qm_mon(fct_syn_wf_stack, fct_date, qm_scaling_path, qm_mask):
             fct_syn_wf_stack[0,ct_r,ct_c] = temp
 
     return fct_syn_wf_stack
+import tensorflow as tf
+from tensorflow.python.platform import gfile
+from tensorflow.core.protobuf import saved_model_pb2
+from tensorflow.python.util import compat
+
+def load_model_from_pb(model_path):
+    """Load a model from a saved_model.pb file."""
+    model_filename = os.path.join(model_path, 'saved_model.pb')
+    print(f"Loading model from {model_filename}")
+    
+    with tf.compat.v1.Session() as sess:  # Use compat.v1 for TensorFlow 2.x compatibility
+        with gfile.FastGFile(model_filename, 'rb') as f:
+            data = compat.as_bytes(f.read())
+            sm = saved_model_pb2.SavedModel()
+            sm.ParseFromString(data)
+            tf.import_graph_def(sm.meta_graphs[0].graph_def)
+        print(f"Model successfully loaded from {model_filename}")
+    return sess.graph
+
+import os
+import json
+import urllib.request
+import datetime as dt
+import pandas as pd
+import xarray as xr
+import numpy as np
+import ssl
+import time
+import matplotlib.pyplot as plt
 
 def run_fier(AOI_str, doi, in_run_type):
     """
-    This function read the AOI, DOI, forecasting run type to synthesized forecasted water fraction
+    This function reads the AOI, DOI, forecasting run type to synthesize forecasted water fraction
 
     :param AOI_str: Area-Of-Interest
     :param doi: Date-Of-Interest
@@ -191,35 +220,34 @@ def run_fier(AOI_str, doi, in_run_type):
 
     :return: Synthesized forecasted water fraction
     """
-    # Path to read neccessary data
-    TF_model_path = 'AOI/'+AOI_str+'/TF_model/'
-    qm_scaling_path = 'AOI/'+AOI_str+'/for_qm_scaling/'
+    # Path to read necessary data
+    TF_model_path = 'AOI/' + AOI_str + '/TF_model/'
+    qm_scaling_path = 'AOI/' + AOI_str + '/for_qm_scaling/'
 
-    hist_real_stack_path = qm_scaling_path+'hist_real_wf_trim.nc'
-    hist_syn_stack_path = qm_scaling_path+'hist_syn_wf_trim.nc'
+    hist_real_stack_path = qm_scaling_path + 'hist_real_wf_trim.nc'
+    hist_syn_stack_path = qm_scaling_path + 'hist_syn_wf_trim.nc'
 
-    RSM_path = 'AOI/'+AOI_str+'/RSM/SM_hydro_App.nc'
-    jrc_perm_water_path = 'AOI/'+AOI_str+'/RSM/JRC_perm_water.nc'
-    qm_pr_r_mask_path = qm_scaling_path+'qm_pr_r_mask.nc'
-    qm_spr_r_mask_path = qm_scaling_path+'qm_spr_r_mask.nc'
+    RSM_path = 'AOI/' + AOI_str + '/RSM/SM_hydro_App.nc'
+    jrc_perm_water_path = 'AOI/' + AOI_str + '/RSM/JRC_perm_water.nc'
+    qm_pr_r_mask_path = qm_scaling_path + 'qm_pr_r_mask.nc'
+    qm_spr_r_mask_path = qm_scaling_path + 'qm_spr_r_mask.nc'
 
     # Path to archived NWM forecast
-    nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
-    nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
+    nwm_archive_path = 'AOI/' + AOI_str + '/nwm_archive/medium_lt08_App.nc'
+    nwm_bias_corrected_archive_path = 'AOI/' + AOI_str + '/nwm_archive/medium_lt08_App_biascorrected.nc'
 
-    # Read neccessary data
+    # Read necessary data
     xr_RSM = xr.load_dataset(RSM_path)
     hist_obs_wf = xr.load_dataarray(hist_real_stack_path, decode_coords='all')
     hist_syn_wf = xr.load_dataarray(hist_syn_stack_path, decode_coords='all')
     jrc_perm_water = xr.load_dataarray(jrc_perm_water_path, decode_coords='all')
-    #qm_mask = xr.load_dataarray(qm_pr_r_mask_path)
+    # qm_mask = xr.load_dataarray(qm_pr_r_mask_path)
     qm_mask = xr.load_dataarray(qm_spr_r_mask_path)
     nwm_archive = xr.load_dataarray(nwm_archive_path)
     nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
 
     wf_mean = xr_RSM.temporal_mean.values
     for ct_mode in range(xr_RSM.sizes['mode']):
-
         mode = xr_RSM.spatial_modes.mode[ct_mode].values
 
         sm = xr_RSM.spatial_modes.sel(mode=mode)
@@ -227,52 +255,52 @@ def run_fier(AOI_str, doi, in_run_type):
         nwm_site = xr_RSM.nwm_site.sel(mode=mode).values
         RTPC_std = xr_RSM.model_RTPC_std_sel.sel(mode=mode).values
         RTPC_mean = xr_RSM.model_RTPC_mean_sel.sel(mode=mode).values
-            
-        if in_run_type=='archive':
-            doi_fct_q = nwm_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
-        elif in_run_type=='biascorrection':
-            doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
-        else:        
 
+        if in_run_type == 'archive':
+            doi_fct_q = nwm_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
+        elif in_run_type == 'biascorrection':
+            doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
+        else:
             ssl._create_default_https_context = ssl._create_stdlib_context
-           
-            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/'+in_run_type+'/streamflow?&station_id='+str(nwm_site))
+            webURL = urllib.request.urlopen('https://nwmdata.nohrsc.noaa.gov/latest/forecasts/' + in_run_type + '/streamflow?&station_id=' + str(nwm_site))
             data = webURL.read()
             encoding = webURL.info().get_content_charset('utf-8')
             JSON_object = json.loads(data.decode(encoding))
-            
+
             fct_datetime = pd.to_datetime(pd.DataFrame(JSON_object[0]["data"])["forecast-time"])
-            doi_indx0 = fct_datetime >= (dt.datetime.strptime(doi,'%Y-%m-%d'))
-            doi_indx1 = (fct_datetime < (dt.datetime.strptime(doi,'%Y-%m-%d'))+dt.timedelta(days=1))
+            doi_indx0 = fct_datetime >= (dt.datetime.strptime(doi, '%Y-%m-%d'))
+            doi_indx1 = (fct_datetime < (dt.datetime.strptime(doi, '%Y-%m-%d')) + dt.timedelta(days=1))
             doi_indx = doi_indx0 & doi_indx1
-        
+
             doi_fct_datetime = fct_datetime[doi_indx]
-            doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
-                               
-        in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
+            doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx] * 0.0283168).mean()
+
+        # Load the model using the lower-level API
+        model_path = os.path.join(TF_model_path, f'site-{str(site)}_tpc{str(mode).zfill(2)}')
+        graph = load_model_from_pb(model_path)
+        tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(graph=graph))
 
         in_good_hydro = doi_fct_q
         tf_good_hydro = tf.data.Dataset.from_tensors(in_good_hydro)
-        est_tpc = in_model.predict(tf_good_hydro)*RTPC_std+RTPC_mean
+        in_model = tf.compat.v1.keras.models.load_model(model_path)  # Load the model within the same graph
+
+        est_tpc = in_model.predict(tf_good_hydro) * RTPC_std + RTPC_mean
 
         est_tpc1 = np.tile(est_tpc[:, :, None], (1, sm.sizes['lat'], sm.sizes['lon']))
-        sm1 = np.tile(sm.values[None,:,:], (est_tpc.shape[0], 1, 1))
-    
-        syn_wf_temp = sm1*est_tpc1
-        if ct_mode==0:
+        sm1 = np.tile(sm.values[None, :, :], (est_tpc.shape[0], 1, 1))
+
+        syn_wf_temp = sm1 * est_tpc1
+        if ct_mode == 0:
             fct_syn_wf = syn_wf_temp
         else:
             fct_syn_wf = fct_syn_wf + syn_wf_temp
     fct_syn_wf = fct_syn_wf + wf_mean
 
-    st_time=time.time()
+    st_time = time.time()
     map_fct_syn_wf = perf_qm_quick(hist_obs_wf, hist_syn_wf, fct_syn_wf, qm_mask)
-    #map_fct_syn_wf = perf_qm(fct_syn_wf, qm_scaling_path, qm_mask)
-    #map_fct_syn_wf = perf_qm_mon(fct_syn_wf, doi, qm_scaling_path, qm_mask)
-    #map_fct_syn_wf = fct_syn_wf
-    ed_time=time.time()
-    print(ed_time-st_time)
-    map_fct_syn_wf = np.where(jrc_perm_water==1, 100, map_fct_syn_wf)
+    ed_time = time.time()
+    print(ed_time - st_time)
+    map_fct_syn_wf = np.where(jrc_perm_water == 1, 100, map_fct_syn_wf)
 
     # Create image
     folder_name = 'Output'
@@ -280,25 +308,26 @@ def run_fier(AOI_str, doi, in_run_type):
         os.makedirs(folder_name)
 
     fig = plt.figure()
-    plt.imshow(map_fct_syn_wf[0], cmap='jet', vmin=0, vmax=100,interpolation='none')
+    plt.imshow(map_fct_syn_wf[0], cmap='jet', vmin=0, vmax=100, interpolation='none')
     plt.axis('off')
-    plt.savefig(folder_name +'/water_fraction.png', bbox_inches='tight', dpi=600, pad_inches = 0)
+    plt.savefig(folder_name + '/water_fraction.png', bbox_inches='tight', dpi=600, pad_inches=0)
     plt.close()
 
     bounds = [[xr_RSM.lat.values.min(), xr_RSM.lon.values.min()],
-    [xr_RSM.lat.values.max(), xr_RSM.lon.values.max()]]
+              [xr_RSM.lat.values.max(), xr_RSM.lon.values.max()]]
 
     out_file = xr.DataArray(
-            data = map_fct_syn_wf,
-            coords = dict(
-                time=(["time"],[pd.to_datetime(doi)]),
-                lat=(["lat"],xr_RSM.lat.values),
-                lon=(["lon"],xr_RSM.lon.values)
-            )
+        data=map_fct_syn_wf,
+        coords=dict(
+            time=(["time"], [pd.to_datetime(doi)]),
+            lat=(["lat"], xr_RSM.lat.values),
+            lon=(["lon"], xr_RSM.lon.values)
         )
+    )
 
-    out_file.to_netcdf(folder_name +'/'+in_run_type+'_'+doi+'.nc')
+    out_file.to_netcdf(folder_name + '/' + in_run_type + '_' + doi + '.nc')
 
     xr_RSM.close()
 
     return bounds
+
