@@ -198,6 +198,27 @@ def load_model_from_pb(model_path):
             tf.import_graph_def(sm.meta_graphs[0].graph_def)
         print(f"Model successfully loaded from {model_filename}")
     return sess.graph
+import tensorflow as tf
+import os
+
+def load_and_verify_saved_model(model_path):
+    """
+    Load and verify a SavedModel from a given directory.
+    """
+    try:
+        model = tf.saved_model.load(model_path)
+        print(f"Model successfully loaded from {model_path}")
+        # List available signatures
+        print("Available Signatures:")
+        for signature in model.signatures:
+            print(signature)
+        return model
+    except Exception as e:
+        print(f"Failed to load model from {model_path}: {e}")
+        raise
+
+# Example usage:
+# load_and_verify_saved_model('path/to/saved_model_directory')
 
 import os
 import json
@@ -275,16 +296,15 @@ def run_fier(AOI_str, doi, in_run_type):
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx] * 0.0283168).mean()
 
-        # Load the model using the lower-level API
+        # Load the model using the new high-level API function
         model_path = os.path.join(TF_model_path, f'site-{str(site)}_tpc{str(mode).zfill(2)}')
-        graph = load_model_from_pb(model_path)
-        tf.compat.v1.keras.backend.set_session(tf.compat.v1.Session(graph=graph))
+        model = load_and_verify_saved_model(model_path)
 
-        in_good_hydro = doi_fct_q
-        tf_good_hydro = tf.data.Dataset.from_tensors(in_good_hydro)
-        in_model = tf.compat.v1.keras.models.load_model(model_path)  # Load the model within the same graph
+        # Assuming 'serving_default' is the signature name, you can modify this as per your model
+        infer = model.signatures["serving_default"]
 
-        est_tpc = in_model.predict(tf_good_hydro) * RTPC_std + RTPC_mean
+        in_good_hydro = tf.convert_to_tensor([doi_fct_q], dtype=tf.float32)
+        est_tpc = infer(in_good_hydro)["output_0"].numpy() * RTPC_std + RTPC_mean
 
         est_tpc1 = np.tile(est_tpc[:, :, None], (1, sm.sizes['lat'], sm.sizes['lon']))
         sm1 = np.tile(sm.values[None, :, :], (est_tpc.shape[0], 1, 1))
@@ -330,4 +350,10 @@ def run_fier(AOI_str, doi, in_run_type):
     xr_RSM.close()
 
     return bounds
+
+# Example usage:
+try:
+    run_fier('AOI_string', '2023-01-01', 'run_type')
+except Exception as e:
+    print(f"Failed to run fier: {e}")
 
