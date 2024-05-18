@@ -205,7 +205,7 @@ def run_fier(AOI_str, doi, in_run_type):
 
     # Path to archived NWM forecast
     nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
-	nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
+    nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
 
     # Read neccessary data
     xr_RSM = xr.load_dataset(RSM_path)
@@ -215,7 +215,7 @@ def run_fier(AOI_str, doi, in_run_type):
     #qm_mask = xr.load_dataarray(qm_pr_r_mask_path)
     qm_mask = xr.load_dataarray(qm_spr_r_mask_path)
     nwm_archive = xr.load_dataarray(nwm_archive_path)
-	nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
+    nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
 
     wf_mean = xr_RSM.temporal_mean.values
     for ct_mode in range(xr_RSM.sizes['mode']):
@@ -230,8 +230,8 @@ def run_fier(AOI_str, doi, in_run_type):
             
         if in_run_type=='archive':
             doi_fct_q = nwm_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
-		elif in_run_type=='biascorrection'
-			doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
+        elif in_run_type=='biascorrection'
+            doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
         else:        
 
             ssl._create_default_https_context = ssl._create_stdlib_context
