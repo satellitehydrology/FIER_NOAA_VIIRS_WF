@@ -230,8 +230,8 @@ def run_fier(AOI_str, doi, in_run_type):
             
         if in_run_type=='archive':
             doi_fct_q = nwm_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
-		elif in_run_type=='biascorrection'
-			doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
+	elif in_run_type=='biascorrection':
+	    doi_fct_q = nwm_bias_corrected_archive.sel(site=nwm_site).sel(time=pd.to_datetime(doi)).values
         else:        
 
             ssl._create_default_https_context = ssl._create_stdlib_context
