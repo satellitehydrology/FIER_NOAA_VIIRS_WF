@@ -250,7 +250,18 @@ def run_fier(AOI_str, doi, in_run_type):
         
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
-                               
+        import tensorflow.compat.v1 as tf
+        tf.disable_v2_behavior()
+
+        model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
+
+        try:
+            with tf.Session(graph=tf.Graph()) as sess:
+                tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
+                print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            
         in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
 
         in_good_hydro = doi_fct_q
