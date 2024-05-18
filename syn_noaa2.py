@@ -260,6 +260,10 @@ def run_fier(AOI_str, doi, in_run_type):
     nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
 
     wf_mean = xr_RSM.temporal_mean.values
+
+    # Initialize fct_syn_wf to None
+    fct_syn_wf = None
+
     for ct_mode in range(xr_RSM.sizes['mode']):
         mode = xr_RSM.spatial_modes.mode[ct_mode].values
 
@@ -306,44 +310,50 @@ def run_fier(AOI_str, doi, in_run_type):
         sm1 = np.tile(sm.values[None, :, :], (est_tpc.shape[0], 1, 1))
 
         syn_wf_temp = sm1 * est_tpc1
-        if ct_mode == 0:
+        if fct_syn_wf is None:
             fct_syn_wf = syn_wf_temp
         else:
             fct_syn_wf = fct_syn_wf + syn_wf_temp
-    fct_syn_wf = fct_syn_wf + wf_mean
 
-    st_time = time.time()
-    map_fct_syn_wf = perf_qm_quick(hist_obs_wf, hist_syn_wf, fct_syn_wf, qm_mask)
-    ed_time = time.time()
-    print(ed_time - st_time)
-    map_fct_syn_wf = np.where(jrc_perm_water == 1, 100, map_fct_syn_wf)
+    if fct_syn_wf is not None:
+        fct_syn_wf = fct_syn_wf + wf_mean
 
-    # Create image
-    folder_name = 'Output'
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
+        st_time = time.time()
+        map_fct_syn_wf = perf_qm_quick(hist_obs_wf, hist_syn_wf, fct_syn_wf, qm_mask)
+        ed_time = time.time()
+        print(ed_time - st_time)
+        map_fct_syn_wf = np.where(jrc_perm_water == 1, 100, map_fct_syn_wf)
 
-    fig = plt.figure()
-    plt.imshow(map_fct_syn_wf[0], cmap='jet', vmin=0, vmax=100, interpolation='none')
-    plt.axis('off')
-    plt.savefig(folder_name + '/water_fraction.png', bbox_inches='tight', dpi=600, pad_inches=0)
-    plt.close()
+        # Create image
+        folder_name = 'Output'
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
 
-    bounds = [[xr_RSM.lat.values.min(), xr_RSM.lon.values.min()],
-              [xr_RSM.lat.values.max(), xr_RSM.lon.values.max()]]
+        fig = plt.figure()
+        plt.imshow(map_fct_syn_wf[0], cmap='jet', vmin=0, vmax=100, interpolation='none')
+        plt.axis('off')
+        plt.savefig(folder_name + '/water_fraction.png', bbox_inches='tight', dpi=600, pad_inches=0)
+        plt.close()
 
-    out_file = xr.DataArray(
-        data=map_fct_syn_wf,
-        coords=dict(
-            time=(["time"], [pd.to_datetime(doi)]),
-            lat=(["lat"], xr_RSM.lat.values),
-            lon=(["lon"], xr_RSM.lon.values)
+        bounds = [[xr_RSM.lat.values.min(), xr_RSM.lon.values.min()],
+                  [xr_RSM.lat.values.max(), xr_RSM.lon.values.max()]]
+
+        out_file = xr.DataArray(
+            data=map_fct_syn_wf,
+            coords=dict(
+                time=(["time"], [pd.to_datetime(doi)]),
+                lat=(["lat"], xr_RSM.lat.values),
+                lon=(["lon"], xr_RSM.lon.values)
+            )
         )
-    )
 
-    out_file.to_netcdf(folder_name + '/' + in_run_type + '_' + doi + '.nc')
+        out_file.to_netcdf(folder_name + '/' + in_run_type + '_' + doi + '.nc')
 
-    xr_RSM.close()
+        xr_RSM.close()
 
-    return bounds
+        return bounds
+    else:
+        print("No valid modes were processed.")
+        return None
+
 
