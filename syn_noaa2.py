@@ -220,6 +220,7 @@ def load_and_verify_saved_model(model_path):
 # Example usage:
 # load_and_verify_saved_model('path/to/saved_model_directory')
 
+import tensorflow as tf
 import os
 import json
 import urllib.request
@@ -232,15 +233,6 @@ import time
 import matplotlib.pyplot as plt
 
 def run_fier(AOI_str, doi, in_run_type):
-    """
-    This function reads the AOI, DOI, forecasting run type to synthesize forecasted water fraction
-
-    :param AOI_str: Area-Of-Interest
-    :param doi: Date-Of-Interest
-    :param in_run_type: Forecasting run type
-
-    :return: Synthesized forecasted water fraction
-    """
     # Path to read necessary data
     TF_model_path = 'AOI/' + AOI_str + '/TF_model/'
     qm_scaling_path = 'AOI/' + AOI_str + '/for_qm_scaling/'
@@ -296,13 +288,17 @@ def run_fier(AOI_str, doi, in_run_type):
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx] * 0.0283168).mean()
 
-        # Load the model using the new high-level API function
+        # Attempt to load the model using the new high-level API function
         model_path = os.path.join(TF_model_path, f'site-{str(site)}_tpc{str(mode).zfill(2)}')
-        model = load_and_verify_saved_model(model_path)
+        try:
+            model = tf.saved_model.load(model_path)
+            print(f"Model loaded successfully from {model_path}.")
+            infer = model.signatures["serving_default"]
+        except Exception as e:
+            print(f"Failed to load model from {model_path}: {e}")
+            continue
 
         # Assuming 'serving_default' is the signature name, you can modify this as per your model
-        infer = model.signatures["serving_default"]
-
         in_good_hydro = tf.convert_to_tensor([doi_fct_q], dtype=tf.float32)
         est_tpc = infer(in_good_hydro)["output_0"].numpy() * RTPC_std + RTPC_mean
 
@@ -339,21 +335,6 @@ def run_fier(AOI_str, doi, in_run_type):
     out_file = xr.DataArray(
         data=map_fct_syn_wf,
         coords=dict(
-            time=(["time"], [pd.to_datetime(doi)]),
-            lat=(["lat"], xr_RSM.lat.values),
-            lon=(["lon"], xr_RSM.lon.values)
-        )
-    )
-
-    out_file.to_netcdf(folder_name + '/' + in_run_type + '_' + doi + '.nc')
-
-    xr_RSM.close()
-
+            time=(["time"], [pd.to_datetime(
     return bounds
-
-# Example usage:
-try:
-    run_fier('AOI_string', '2023-01-01', 'run_type')
-except Exception as e:
-    print(f"Failed to run fier: {e}")
 
