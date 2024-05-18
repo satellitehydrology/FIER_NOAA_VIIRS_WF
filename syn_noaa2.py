@@ -205,7 +205,7 @@ def run_fier(AOI_str, doi, in_run_type):
 
     # Path to archived NWM forecast
     nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
-	nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
+    nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
 
     # Read neccessary data
     xr_RSM = xr.load_dataset(RSM_path)
