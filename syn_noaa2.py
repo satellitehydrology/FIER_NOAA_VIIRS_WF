@@ -2,7 +2,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.keras import models
 import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+tf.compat.v1.disable_v2_behavior
 #import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
@@ -251,8 +251,7 @@ def run_fier(AOI_str, doi, in_run_type):
         
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
-        import tensorflow.compat.v1 as tf
-        tf.disable_v2_behavior()
+
 
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
 
