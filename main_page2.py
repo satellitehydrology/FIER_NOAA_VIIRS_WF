@@ -107,25 +107,25 @@ with row1_col2:
 
                 image_path = 'Output/water_fraction.png'
                 if not os.path.exists(image_path):
-                    raise FileNotFoundError(f"No such file or directory: '{image_path}'")
+                    st.error(f"No such file or directory: '{image_path}'")
+                else:
+                    folium.raster_layers.ImageOverlay(
+                        image=image_path,
+                        bounds=bounds,
+                        opacity=0.5,
+                        name='Water Fraction Map',
+                        show=True,
+                    ).add_to(m)
 
-                folium.raster_layers.ImageOverlay(
-                    image=image_path,
-                    bounds=bounds,
-                    opacity=0.5,
-                    name='Water Fraction Map',
-                    show=True,
-                ).add_to(m)
+                    colormap = cm.LinearColormap(colors=['blue', 'green', 'red'],
+                                                 vmin=0, vmax=100,
+                                                 caption='Water Fraction (%)')
+                    m.add_child(colormap)
 
-                colormap = cm.LinearColormap(colors=['blue', 'green', 'red'],
-                                             vmin=0, vmax=100,
-                                             caption='Water Fraction (%)')
-                m.add_child(colormap)
-
-                plugins.Fullscreen(position='topright').add_to(m)
-                folium.TileLayer(basemap).add_to(m)
-                m.add_child(folium.LatLngPopup())
-                folium.LayerControl().add_to(m)
+                    plugins.Fullscreen(position='topright').add_to(m)
+                    folium.TileLayer(basemap).add_to(m)
+                    m.add_child(folium.LatLngPopup())
+                    folium.LayerControl().add_to(m)
 
         # Repeat similar checks and logic for other run_type conditions here...
 
