@@ -2,7 +2,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.keras import models
 import tensorflow as tf
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+tf.compat.v2.logging.set_verbosity(tf.compat.v2.logging.ERROR)
 import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
