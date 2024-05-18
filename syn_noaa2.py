@@ -256,7 +256,7 @@ def run_fier(AOI_str, doi, in_run_type):
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
 
         try:
-            with tf.Session(graph=tf.Graph()) as sess:
+            with tf.compat.v1.Session(graph=tf.Graph()) as sess:
                 #in_model = tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
                 in_mode = tf.saved_model.load(sess, [tf.saved_model.SERVING], model_directory)
                 print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
