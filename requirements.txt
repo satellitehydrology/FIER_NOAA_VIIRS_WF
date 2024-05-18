@@ -4,7 +4,7 @@ streamlit-folium
 xarray
 matplotlib
 netcdf4
-tensorflow==2.7
+tensorflow==2.6
 openpyxl
 pandas==1.3.5
 numpy
