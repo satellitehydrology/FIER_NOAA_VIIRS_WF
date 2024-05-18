@@ -4,7 +4,7 @@ from tensorflow.keras import models
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 #import tensorflow as tf
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+#tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 import xarray as xr
 import matplotlib.pyplot as plt
