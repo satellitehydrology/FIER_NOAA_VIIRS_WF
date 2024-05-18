@@ -335,6 +335,15 @@ def run_fier(AOI_str, doi, in_run_type):
     out_file = xr.DataArray(
         data=map_fct_syn_wf,
         coords=dict(
-            time=(["time"], [pd.to_datetime(
+            time=(["time"], [pd.to_datetime(doi)]),
+            lat=(["lat"], xr_RSM.lat.values),
+            lon=(["lon"], xr_RSM.lon.values)
+        )
+    )
+
+    out_file.to_netcdf(folder_name + '/' + in_run_type + '_' + doi + '.nc')
+
+    xr_RSM.close()
+
     return bounds
 
