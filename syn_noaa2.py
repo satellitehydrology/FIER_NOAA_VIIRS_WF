@@ -2,9 +2,10 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.keras import models
 import tensorflow.compat.v1 as tf
-tf.compat.v1.disable_v2_behavior
-#import tensorflow as tf
+tf.compat.v1.disable_v2_behavior()
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+#import tensorflow as tf
+
 
 import xarray as xr
 import matplotlib.pyplot as plt
