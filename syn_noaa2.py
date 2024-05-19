@@ -255,13 +255,21 @@ def run_fier(AOI_str, doi, in_run_type):
 
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
 
+        if not os.path.exists(model_directory):
+            print(f"Model directory {model_directory} does not exist.")
+            continue
+
         try:
-            with tf.compat.v1.Session(graph=tf.Graph()) as sess:
-                in_model = tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
-                #in_model = tf.saved_model.load(sess, [tf.saved_model.SERVING], model_directory)
-                print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
+            with tf.Session(graph=tf.Graph()) as sess:
+                tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
+                print(f"Model loaded successfully from {model_directory}")
+                # Proceed with the rest of your operations using the model
+                # For example, you can save the model as a keras model for easier use later
+                in_model = models.load_model(model_directory)
+                print(f"Keras model loaded from {model_directory}")
         except Exception as e:
-            print(f"Error loading model: {e}")
+            print(f"Error loading model from {model_directory}: {e}")
+            continue
             
         #in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
         #in_model = tf.saved_model.load(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
