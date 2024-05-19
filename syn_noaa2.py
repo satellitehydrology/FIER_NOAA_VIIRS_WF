@@ -255,7 +255,7 @@ def run_fier(AOI_str, doi, in_run_type):
 
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
 
-if not os.path.exists(model_directory):
+        if not os.path.exists(model_directory):
             print(f"Model directory {model_directory} does not exist.")
             continue
 
