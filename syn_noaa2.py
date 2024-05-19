@@ -262,17 +262,17 @@ def run_fier(AOI_str, doi, in_run_type):
 
         try:
             print(f"Attempting to load model from {model_directory}")
-            with tf.Session(graph=tf.Graph()) as sess:
+            with tf.compact.v1.Session(graph=tf.Graph()) as sess:
                 # Check if the SavedModel format is used
                 if os.path.isdir(model_directory):
                     print(f"Loading model using tf.saved_model.loader.load")
-                    tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
+                    in_model = tf.saved_model.load(sess, [tf.saved_model.SERVING], export_dir = model_directory)
                     print(f"Model loaded successfully using tf.saved_model.loader.load from {model_directory}")
                 else:
                     raise ValueError(f"Model directory {model_directory} does not contain a valid SavedModel format")
                 
                 # If the model is loaded successfully, create a Keras model from it
-                in_model = models.load_model(model_directory)
+                #in_model = models.load_model(model_directory)
                 print(f"Keras model loaded from {model_directory}")
                 
         except Exception as e:
