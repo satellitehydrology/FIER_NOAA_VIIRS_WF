@@ -257,8 +257,8 @@ def run_fier(AOI_str, doi, in_run_type):
 
         try:
             with tf.compat.v1.Session(graph=tf.Graph()) as sess:
-                #in_model = tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
-                in_model = tf.saved_model.load(sess, [tf.saved_model.SERVING], model_directory)
+                in_model = tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
+                #in_model = tf.saved_model.load(sess, [tf.saved_model.SERVING], model_directory)
                 print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
         except Exception as e:
             print(f"Error loading model: {e}")
