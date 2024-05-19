@@ -255,31 +255,8 @@ def run_fier(AOI_str, doi, in_run_type):
 
 
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
-
-        if not os.path.exists(model_directory):
-            print(f"Model directory {model_directory} does not exist.")
-            continue
-
-        try:
-            print(f"Attempting to load model from {model_directory}")
-            with tf.compact.v1.Session(graph=tf.Graph()) as sess:
-                # Check if the SavedModel format is used
-                if os.path.isdir(model_directory):
-                    print(f"Loading model using tf.saved_model.loader.load")
-                    in_model = tf.saved_model.load(sess, [tf.saved_model.SERVING], export_dir = model_directory)
-                    print(f"Model loaded successfully using tf.saved_model.loader.load from {model_directory}")
-                else:
-                    raise ValueError(f"Model directory {model_directory} does not contain a valid SavedModel format")
-                
-                # If the model is loaded successfully, create a Keras model from it
-                #in_model = models.load_model(model_directory)
-                print(f"Keras model loaded from {model_directory}")
-                
-        except Exception as e:
-            print(f"Error loading model from {model_directory}: {e}")
-            continue
             
-        #in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
+        in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
         #in_model = tf.saved_model.load(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
         in_good_hydro = doi_fct_q
         tf_good_hydro = tf.data.Dataset.from_tensors(in_good_hydro)
