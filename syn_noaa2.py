@@ -6,6 +6,7 @@ from tensorflow.keras import models
 #tf.compat.v1.disable_v2_behavior()
 
 #import tensorflow as tf
+import streamlit as st
 import tensorflow.compat.v1 as tf
 #tf.disable_v2_behavior()
 tf.compat.v1.disable_v2_behavior
@@ -264,6 +265,8 @@ def run_fier(AOI_str, doi, in_run_type):
                 tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
                 print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
         except Exception as e:
+            st.write(model_directory)
+            
             print(f"Error loading model: {e}")
         in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
         #in_model = tf.saved_model.load(model_directory, export_dir = model_directory)
