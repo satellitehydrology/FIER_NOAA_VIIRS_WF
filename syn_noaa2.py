@@ -254,7 +254,7 @@ def run_fier(AOI_str, doi, in_run_type):
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
 
-
+        
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
    
         in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
