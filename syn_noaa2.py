@@ -1,6 +1,6 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-import tensorflow.keras import keras
+import tensorflow.keras as keras
 #import tensorflow.compat.v1 as tf
 
 #tf.compat.v1.disable_v2_behavior()
