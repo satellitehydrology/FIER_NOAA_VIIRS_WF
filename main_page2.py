@@ -229,8 +229,8 @@ with row1_col2:
             date = st.date_input(
                 "Select the date with available NWM forecast ("+first_datestr+" to "+last_datestr+" UTC):",
                 value = first_date,
-                min_value = first_date,
-                max_value = datetime.datetime(2023, 8, 31),
+                #min_value = first_date,
+                #max_value = datetime.datetime(2023, 8, 31),
             )
             
 
