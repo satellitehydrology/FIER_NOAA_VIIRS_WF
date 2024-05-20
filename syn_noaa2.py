@@ -1,6 +1,7 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-import tensorflow.keras as keras
+from tensorflow.keras import models
+#import tensorflow.keras as keras
 #import tensorflow.compat.v1 as tf
 
 #tf.compat.v1.disable_v2_behavior()
@@ -269,7 +270,7 @@ def run_fier(AOI_str, doi, in_run_type):
         #except Exception as e:
             #print(f"Error loading model: {e}")
         
-        in_model = keras.models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
+        in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)+'.h5')
         #in_model = tf.saved_model.load(model_directory, export_dir = model_directory)
         in_good_hydro = doi_fct_q
         tf_good_hydro = tf.data.Dataset.from_tensors(in_good_hydro)
