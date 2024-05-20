@@ -5,7 +5,7 @@ import tensorflow.keras as keras
 
 #tf.compat.v1.disable_v2_behavior()
 
-#import tensorflow as tf
+import tensorflow as tf
 import streamlit as st
 #import tensorflow.compat.v1 as tf
 #tf.disable_v2_behavior()
