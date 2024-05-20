@@ -13,4 +13,4 @@ datetime
 pynwm
 scipy
 xyzservices
-ee
+geemap
