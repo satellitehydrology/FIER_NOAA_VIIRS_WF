@@ -261,10 +261,10 @@ def run_fier(AOI_str, doi, in_run_type):
         #model_directory = r'AOI/MississippiRiver/TF_model/site-07024175_tpc01'
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
         
-        #try:
-        with tf.Session(graph=tf.Graph()) as sess:
-            tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
-            print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
+        try:
+            with tf.Session(graph=tf.Graph()) as sess:
+                tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
+                print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
         
         except Exception as e:
             print(f"Error loading model: {e}")
