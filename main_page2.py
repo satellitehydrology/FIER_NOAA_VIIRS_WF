@@ -157,7 +157,7 @@ with row1_col2:
             in_run_type2 = 'archive'
            
             AOI_str = st.session_state.AOI_str
-            exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc').time.data}
+            exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App2.nc').time.data}
             exp_fct_data = pd.DataFrame(exp_fct_indata)['time']
             exp_fct_time = pd.to_datetime(exp_fct_data)
             
@@ -169,8 +169,8 @@ with row1_col2:
             date = st.date_input(
                 "Select the date with available NWM forecast ("+first_datestr+" to "+last_datestr+" UTC):",
                 value = first_date,
-                min_value = first_date,
-                max_value = last_date,
+                #min_value = first_date,
+                #max_value = last_date,
             )
             
 
