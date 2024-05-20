@@ -400,7 +400,7 @@ with row1_col2:
                 m.add_child(folium.LatLngPopup())
                 folium.LayerControl().add_to(m)
        if run_type == 'Medium-Range (bias-corrected)':
-            in_run_type = 'medium_range_ensemble_mean_bias_corrected'
+            in_run_type = 'medium_range_ensemble_mean'
 
             ssl._create_default_https_context = ssl._create_stdlib_context
            
