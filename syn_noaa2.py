@@ -261,7 +261,7 @@ def run_fier(AOI_str, doi, in_run_type):
         
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
-            if in_run_type=='medium_range_ensemble_mean_bias_corrected' 
+            if in_run_type=='medium_range_ensemble_mean_bias_corrected': 
                 with open(model_path + 'interpolated_function'+str(nwm_site) + '.pkl', 'rb') as file:
                     bc_model = pickle.load(file)
                 doi_fct_q = bc_model (doi_fct_q) 
