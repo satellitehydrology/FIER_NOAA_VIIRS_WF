@@ -1,15 +1,15 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-from tensorflow.keras import keras
+import tensorflow.keras import keras
 #import tensorflow.compat.v1 as tf
 
 #tf.compat.v1.disable_v2_behavior()
 
 #import tensorflow as tf
 import streamlit as st
-import tensorflow.compat.v1 as tf
+#import tensorflow.compat.v1 as tf
 #tf.disable_v2_behavior()
-tf.compat.v1.disable_v2_behavior
+#tf.compat.v1.disable_v2_behavior
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 import xarray as xr
