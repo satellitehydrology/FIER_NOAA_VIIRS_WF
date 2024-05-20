@@ -257,7 +257,7 @@ def run_fier(AOI_str, doi, in_run_type):
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
 
-        model_directory = r'AOI\MississippiRiver\TF_model\site-07024175_tpc01'
+        model_directory = r'AOI/MississippiRiver/TF_model/site-07024175_tpc01'
         #model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
         try:
             with tf.Session(graph=tf.Graph()) as sess:
