@@ -265,8 +265,8 @@ def run_fier(AOI_str, doi, in_run_type):
                 print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
         except Exception as e:
             print(f"Error loading model: {e}")
-        #in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
-        in_model = tf.saved_model.load(model_directory, tags=["foo-tag"], export_dir = model_directory)
+        in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
+        #in_model = tf.saved_model.load(model_directory, tags=["foo-tag"], export_dir = model_directory)
         in_good_hydro = doi_fct_q
         tf_good_hydro = tf.data.Dataset.from_tensors(in_good_hydro)
         est_tpc = in_model.predict(tf_good_hydro)*RTPC_std+RTPC_mean
