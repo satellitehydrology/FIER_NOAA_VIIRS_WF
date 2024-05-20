@@ -25,7 +25,7 @@ import branca.colormap as cm
 
 import ssl
 
-
+import ee
 
 basemap = TileProvider.from_qms("OpenTopoMap")
 
