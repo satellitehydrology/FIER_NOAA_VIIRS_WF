@@ -216,6 +216,7 @@ def run_fier(AOI_str, doi, in_run_type):
     qm_spr_r_mask_path = qm_scaling_path+'qm_spr_r_mask.nc'
 
     # Path to archived NWM forecast
+    model_path = nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/'
     nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
     nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
 
@@ -260,6 +261,9 @@ def run_fier(AOI_str, doi, in_run_type):
         
             doi_fct_datetime = fct_datetime[doi_indx]
             doi_fct_q = (pd.DataFrame(JSON_object[0]["data"])['value'][doi_indx]*0.0283168).mean()
+            with open(model_path + 'interpolated_function'+str(nwm_site) + '.pkl', 'rb') as file:
+                bc_model = pickle.load(file)
+            doi_fct_q = bc_model (doi_fct_q) 
 
         #model_directory = r'AOI/MississippiRiver/TF_model/site-07024175_tpc01'
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
