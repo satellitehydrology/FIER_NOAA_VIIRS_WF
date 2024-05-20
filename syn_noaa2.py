@@ -2,11 +2,14 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from tensorflow.keras import models
 #import tensorflow.compat.v1 as tf
-import tensorflow as tf
-#tf.compat.v1.disable_v2_behavior()
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-#import tensorflow as tf
 
+#tf.compat.v1.disable_v2_behavior()
+
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+#tf.disable_v2_behavior()
+tf.compat.v1.disable_v2_behavior
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 import xarray as xr
 import matplotlib.pyplot as plt
@@ -260,7 +263,7 @@ def run_fier(AOI_str, doi, in_run_type):
             with tf.Session(graph=tf.Graph()) as sess:
                 in_model = tf.saved_model.loader.load(sess, [tf.saved_model.SERVING], model_directory)
                 print("Model loaded successfully in TensorFlow 1.x compatibility mode.")
-       except Exception as e:
+        except Exception as e:
             print(f"Error loading model: {e}")
         in_model = models.load_model(TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2))
         #in_model = tf.saved_model.load(model_directory, tags=["foo-tag"])
