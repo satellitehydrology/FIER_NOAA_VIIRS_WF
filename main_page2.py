@@ -25,7 +25,7 @@ import branca.colormap as cm
 
 import ssl
 
-import ee
+#import ee
 
 basemap = TileProvider.from_qms("OpenTopoMap")
 
@@ -40,10 +40,12 @@ st.title("Forecasting Inundation Extents using REOF analysis (FIER) – VIIRS/AB
 
 row1_col1, row1_col2 = st.columns([2, 1])
 # Set up Geemap
+'''
 json_data = st.secrets["json_data"]
 service_account = st.secrets["service_account"]
 credentials = ee.ServiceAccountCredentials(service_account, key_data=json_data)
 ee.Initialize(credentials)
+'''
 with row1_col1:
     m = folium.Map(
         zoom_start=4,
