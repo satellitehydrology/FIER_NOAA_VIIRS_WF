@@ -230,7 +230,7 @@ with row1_col2:
                 "Select the date with available NWM forecast ("+first_datestr+" to "+last_datestr+" UTC):",
                 value = first_date,
                 min_value = first_date,
-                max_value = datetime.date(datetime.strptime('2023-08-01', '%Y-%m-%d')),
+                max_value = datetime.datetime(2023, 8, 31),
             )
             
 
