@@ -5,6 +5,7 @@ from tensorflow.keras import models
 #import tensorflow.compat.v1 as tf
 
 #tf.compat.v1.disable_v2_behavior()
+import pickle
 
 import tensorflow as tf
 import streamlit as st
@@ -25,6 +26,7 @@ import ssl
 import datetime as dt
 import pandas as pd
 from scipy import interpolate
+from scipy.interpolate import interp1d
 import time
 
 
