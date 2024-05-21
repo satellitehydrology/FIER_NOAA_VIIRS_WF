@@ -216,8 +216,9 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
     qm_spr_r_mask_path = qm_scaling_path+'qm_spr_r_mask.nc'
 
     # Path to archived NWM forecast
-    model_path = nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/'
-    nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
+    model_path = 'AOI/'+AOI_str+'/nwm_archive/'
+    #nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
+    nwm_archive_path = 'medium_lt08_tot.nc'
     nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
 
     # Read neccessary data
