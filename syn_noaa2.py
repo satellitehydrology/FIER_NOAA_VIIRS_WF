@@ -219,7 +219,9 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
     model_path = 'AOI/'+AOI_str+'/nwm_archive/'
     #nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
     nwm_archive_path = 'medium_lt08_tot.nc'
-    nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
+    if AOI_str=='MisssissippiRiver'
+        nwm_bias_corrected_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc'
+        nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
 
     # Read neccessary data
     xr_RSM = xr.load_dataset(RSM_path)
@@ -229,7 +231,7 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
     #qm_mask = xr.load_dataarray(qm_pr_r_mask_path)
     qm_mask = xr.load_dataarray(qm_spr_r_mask_path)
     nwm_archive = xr.load_dataarray(nwm_archive_path)
-    nwm_bias_corrected_archive = xr.load_dataarray(nwm_bias_corrected_archive_path)
+    
 
     wf_mean = xr_RSM.temporal_mean.values
     for ct_mode in range(xr_RSM.sizes['mode']):
