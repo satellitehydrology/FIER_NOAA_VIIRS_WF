@@ -217,7 +217,7 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
 
     # Path to archived NWM forecast
     model_path = 'AOI/'+AOI_str+'/nwm_archive/'
-    #nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
+    nwm_archive_path = 'AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc'
     
     if AOI_str=='MississippiRiver':
         nwm_archive_path = 'medium_lt08_tot.nc'
