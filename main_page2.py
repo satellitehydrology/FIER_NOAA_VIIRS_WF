@@ -157,7 +157,7 @@ with row1_col2:
             in_run_type2 = 'archive'
            
             AOI_str = st.session_state.AOI_str
-            exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc').time.data}
+            #exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc').time.data}
             if AOI_str == 'MississippiRiver': 
                 exp_fct_indata = {'time':xr.load_dataarray('medium_lt08_tot.nc').time.data}
             exp_fct_data = pd.DataFrame(exp_fct_indata)['time']
