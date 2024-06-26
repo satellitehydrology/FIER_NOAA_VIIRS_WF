@@ -3,11 +3,10 @@ streamlit
 streamlit-folium
 xarray
 netcdf4
-h5netcdf
 matplotlib
 tensorflow==2.15
 openpyxl
-pandas==2.0.3
+pandas==1.3.5
 numpy
 plotly
 datetime
