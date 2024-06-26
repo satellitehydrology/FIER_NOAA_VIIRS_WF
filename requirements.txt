@@ -1,14 +1,12 @@
 click
 streamlit
 streamlit-folium
-xarray
+xarray==2023.7.0
 matplotlib
-netCDF4
-h5netcdf
 tensorflow==2.15
 openpyxl
-pandas==1.3.5
-numpy
+pandas==2.0.3
+numpy==1.25.2
 plotly
 datetime
 pynwm
