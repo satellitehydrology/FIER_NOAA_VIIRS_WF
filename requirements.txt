@@ -1,7 +1,7 @@
 click
 streamlit
 streamlit-folium
-xarray
+xarray==2024.06.0
 dask
 packaging
 matplotlib
