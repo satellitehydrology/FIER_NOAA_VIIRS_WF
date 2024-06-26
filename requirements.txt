@@ -2,6 +2,7 @@ click
 streamlit
 streamlit-folium
 xarray==2023.7.0
+netcdf4
 matplotlib
 tensorflow==2.15
 openpyxl
