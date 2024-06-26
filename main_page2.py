@@ -10,7 +10,9 @@ from syn_noaa2 import *
 
 import urllib
 import json
-
+from netCDF4 import Dataset
+import xarray as xr
+import h5py
 import xarray as xr
 import numpy.ma as ma
 import pandas as pd
