@@ -2,9 +2,8 @@ click
 streamlit
 streamlit-folium
 xarray
-netcdf4
+netCDF4
 h5py
-h5netcdf
 matplotlib
 tensorflow==2.15
 openpyxl
