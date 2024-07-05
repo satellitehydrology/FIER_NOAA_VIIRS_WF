@@ -4,6 +4,7 @@ streamlit-folium
 xarray
 cftime
 zarr
+iris
 pydap
 netCDF4
 h5netcdf
