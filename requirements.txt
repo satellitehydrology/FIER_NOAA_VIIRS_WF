@@ -8,7 +8,7 @@ packaging
 matplotlib
 tensorflow==2.15
 openpyxl
-pandas==1.3.5
+pandas==1.5
 numpy
 plotly
 datetime
