@@ -1,14 +1,14 @@
 click
 streamlit
 streamlit-folium
-xarray
+xarray==2024.6.0
 netCDF4
 h5netcdf
 packaging
 matplotlib
 tensorflow==2.15
 openpyxl
-pandas==1.5
+pandas==2.0.3
 numpy
 plotly
 datetime
