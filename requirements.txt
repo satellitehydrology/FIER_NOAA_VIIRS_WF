@@ -2,6 +2,9 @@ click
 streamlit
 streamlit-folium
 xarray
+cftime
+zarr
+pydap
 netCDF4
 h5netcdf
 packaging
