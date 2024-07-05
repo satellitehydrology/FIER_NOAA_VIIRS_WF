@@ -4,6 +4,7 @@ streamlit-folium
 xarray
 cftime
 zarr
+dask
 iris
 pydap
 netCDF4
