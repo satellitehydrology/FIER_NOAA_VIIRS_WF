@@ -1,7 +1,7 @@
 click
 streamlit
 streamlit-folium
-xarray==2024.6.0
+xarray
 netCDF4
 h5netcdf
 packaging
