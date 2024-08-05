@@ -225,7 +225,7 @@ with row1_col2:
             AOI_str = st.session_state.AOI_str
             if AOI_str=='MississippiRiver':
                 exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App_biascorrected.nc').time.data}
-            elif AOI_str=='MississippiRiver':
+            elif AOI_str=='RedRiver':
                 exp_fct_indata = {'time':xr.load_dataarray('AOI/'+AOI_str+'/nwm_archive/medium_lt08_App.nc').time.data}
             exp_fct_data = pd.DataFrame(exp_fct_indata)['time']
             exp_fct_time = pd.to_datetime(exp_fct_data)
