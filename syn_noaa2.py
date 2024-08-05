@@ -231,7 +231,7 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
     jrc_perm_water = xr.load_dataarray(jrc_perm_water_path, decode_coords='all', engine = 'h5netcdf')
     #qm_mask = xr.load_dataarray(qm_pr_r_mask_path, engine = 'h5netcdf')
     qm_mask = xr.load_dataarray(qm_spr_r_mask_path, engine = 'h5netcdf')
-    nwm_archive = xr.load_dataarray(nwm_archive_path, engine = 'h5netcdf')
+    nwm_archive = xr.load_dataarray(nwm_archive_path)
     
 
     wf_mean = xr_RSM.temporal_mean.values
