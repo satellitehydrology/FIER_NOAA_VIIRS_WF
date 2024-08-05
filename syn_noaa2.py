@@ -329,7 +329,7 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
             )
         )
 
-    out_file.to_netcdf(folder_name +'/'+in_run_type+'_'+doi+'.nc')
+    out_file.to_netcdf(folder_name +'/'+in_run_type+'_'+doi+'.nc', engine = 'h5netcdf')
 
     xr_RSM.close()
 
