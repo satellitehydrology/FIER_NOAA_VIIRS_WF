@@ -275,6 +275,7 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
                     doi_fct_q = bc_model (doi_fct_q)
                 except:
                     st.write("This option is not available for Red River")
+                    break
 
         #model_directory = r'AOI/MississippiRiver/TF_model/site-07024175_tpc01'
         model_directory = TF_model_path+'site-'+str(site)+'_tpc'+str(mode).zfill(2)
