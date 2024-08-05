@@ -226,12 +226,12 @@ def run_fier(AOI_str, doi, in_run_type, in_run_type2):
 
     # Read neccessary data
     xr_RSM = xr.load_dataset(RSM_path, engine = 'h5netcdf')
-    hist_obs_wf = xr.load_dataarray(hist_real_stack_path, decode_coords='all')
-    hist_syn_wf = xr.load_dataarray(hist_syn_stack_path, decode_coords='all')
-    jrc_perm_water = xr.load_dataarray(jrc_perm_water_path, decode_coords='all')
-    #qm_mask = xr.load_dataarray(qm_pr_r_mask_path)
-    qm_mask = xr.load_dataarray(qm_spr_r_mask_path)
-    nwm_archive = xr.load_dataarray(nwm_archive_path)
+    hist_obs_wf = xr.load_dataarray(hist_real_stack_path, decode_coords='all', engine = 'h5netcdf')
+    hist_syn_wf = xr.load_dataarray(hist_syn_stack_path, decode_coords='all', engine = 'h5netcdf')
+    jrc_perm_water = xr.load_dataarray(jrc_perm_water_path, decode_coords='all', engine = 'h5netcdf')
+    #qm_mask = xr.load_dataarray(qm_pr_r_mask_path, engine = 'h5netcdf')
+    qm_mask = xr.load_dataarray(qm_spr_r_mask_path, engine = 'h5netcdf')
+    nwm_archive = xr.load_dataarray(nwm_archive_path, engine = 'h5netcdf')
     
 
     wf_mean = xr_RSM.temporal_mean.values
